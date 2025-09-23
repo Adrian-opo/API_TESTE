@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCriancaDto } from './dto/create-crianca.dto';
@@ -44,15 +44,21 @@ export class CriancaService {
   }
 
   async findOne(id: number): Promise<Crianca> {
-    return this.criancaRepository.findOne({
+    const crianca = await this.criancaRepository.findOne({
       where: { id },
       relations: ['endereco', 'contatos'],
     });
+
+    if (!crianca) {
+      throw new NotFoundException(`Criança com ID ${id} não encontrada`);
+    }
+
+    return crianca;
   }
 
   async update(id: number, updateCriancaDto: UpdateCriancaDto): Promise<Crianca> {
     const crianca = await this.findOne(id);
-    
+
     if (updateCriancaDto.endereco) {
       await this.enderecoRepository.update(crianca.endereco.id, updateCriancaDto.endereco);
     }
@@ -75,11 +81,11 @@ export class CriancaService {
 
   async remove(id: number): Promise<void> {
     const crianca = await this.findOne(id);
-    
+
     // Remover endereço e contatos relacionados
     await this.enderecoRepository.remove(crianca.endereco);
     await this.contatosRepository.remove(crianca.contatos);
-    
+
     // Remover criança
     await this.criancaRepository.remove(crianca);
   }

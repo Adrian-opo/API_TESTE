@@ -54,7 +54,7 @@ Isso irá:
 ### Acessando a API
 
 - **API**: http://localhost:3000
-- **Documentação Swagger**: http://localhost:3000/api
+- **Documentação Swagger**: http://localhost:3000/swagger
 
 ## Endpoints da API
 
