@@ -17,14 +17,13 @@ async function bootstrap() {
     .addServer('/', 'Servidor Local (Desenvolvimento)')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger', app, document);
 
   // Configuração de CORS
   app.enableCors();
 
   await app.listen(3000);
   console.log('Aplicação rodando na porta 3000');
-  console.log('Swagger disponível em: http://localhost:3000/api');
-  console.log('Rotas da API: http://localhost:3000/criancas');
+  console.log('Swagger disponível em: http://localhost:3000/swagger');
 }
 bootstrap();
