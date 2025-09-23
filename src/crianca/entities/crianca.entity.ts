@@ -33,12 +33,12 @@ export class Crianca {
   @ApiProperty({ description: 'Tipo do responsável', example: 'Mãe' })
   tipoResponsavel: string;
 
-  @OneToOne(() => Endereco, { cascade: true, eager: true })
+  @OneToOne(() => Endereco, { cascade: true, eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   @ApiProperty({ description: 'Endereço da criança', type: () => Endereco })
   endereco: Endereco;
 
-  @OneToOne(() => Contatos, { cascade: true, eager: true })
+  @OneToOne(() => Contatos, { cascade: true, eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   @ApiProperty({ description: 'Contatos da criança', type: () => Contatos })
   contatos: Contatos;

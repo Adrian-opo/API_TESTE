@@ -82,11 +82,8 @@ export class CriancaService {
   async remove(id: number): Promise<void> {
     const crianca = await this.findOne(id);
 
-    // Remover endereço e contatos relacionados
-    await this.enderecoRepository.remove(crianca.endereco);
-    await this.contatosRepository.remove(crianca.contatos);
-
-    // Remover criança
+    // Com cascade configurado, só precisamos remover a criança
+    // Os endereços e contatos serão removidos automaticamente
     await this.criancaRepository.remove(crianca);
   }
 }
