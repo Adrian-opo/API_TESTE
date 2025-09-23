@@ -6,23 +6,25 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Configurar prefixo global para todas as rotas
-  app.setGlobalPrefix('api');
+
 
   // Configuração do Swagger
   const config = new DocumentBuilder()
     .setTitle('API de Crianças')
     .setDescription('API para cadastro e gerenciamento de crianças')
     .setVersion('1.0')
-    .addServer('/api') // Adicionar servidor base para Swagger
+    .addServer('/api', 'Servidor de Produção (via Nginx)')
+    .addServer('/', 'Servidor Local (Desenvolvimento)')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('api', app, document);
 
   // Configuração de CORS
   app.enableCors();
 
   await app.listen(3000);
   console.log('Aplicação rodando na porta 3000');
-  console.log('Swagger disponível em: http://localhost:3000/swagger');
+  console.log('Swagger disponível em: http://localhost:3000/api');
+  console.log('Rotas da API: http://localhost:3000/criancas');
 }
 bootstrap();
