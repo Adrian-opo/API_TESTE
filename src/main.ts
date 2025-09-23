@@ -5,11 +5,15 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Configurar prefixo global para todas as rotas
+  app.setGlobalPrefix('api');
+
   // Configuração do Swagger
   const config = new DocumentBuilder()
     .setTitle('API de Crianças')
     .setDescription('API para cadastro e gerenciamento de crianças')
     .setVersion('1.0')
+    .addServer('/api') // Adicionar servidor base para Swagger
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
