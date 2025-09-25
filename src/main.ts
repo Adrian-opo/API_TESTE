@@ -7,6 +7,7 @@ async function bootstrap() {
 
   // Configurar prefixo global para todas as rotas
 
+  app.setGlobalPrefix('api');
 
   // Configuração do Swagger
   const config = new DocumentBuilder()
